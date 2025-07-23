@@ -589,22 +589,22 @@ export function YeyoCreative() {
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="download" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>AIO Downloader</CardTitle>
                               <CardDescription>
                                 Unduh dari berbagai sumber seperti Spotify, YouTube, Instagram, dll.
                               </CardDescription>
-                            </CardHeader>
+                              </CardHeader>
                             <CardFooter>
                               <Link href="/download/aio" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
                           <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
@@ -618,19 +618,32 @@ export function YeyoCreative() {
                             </CardFooter>
                           </Card>
                         </motion.div>
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>TikTok Downloader</CardTitle>
+                              <CardDescription>Unduh video atau audio dari TikTok.</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/download/tiktok" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
                       </div>
                     </TabsContent>
                     <TabsContent value="ai" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                            <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Coming Soon</CardTitle>
                               <CardDescription>Fitur AI akan segera tersedia.</CardDescription>
-                              </CardHeader>
-                            </Card>
-                          </motion.div>
-                    </div>
+                            </CardHeader>
+                          </Card>
+                        </motion.div>
+                          </div>
                 </TabsContent>
                   </Tabs>
                 </TabsContent>
