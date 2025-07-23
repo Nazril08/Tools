@@ -651,6 +651,19 @@ export function YeyoCreative() {
                             </CardFooter>
                           </Card>
                         </motion.div>
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>Image Upscaler</CardTitle>
+                              <CardDescription>Tingkatkan resolusi gambar secara cerdas.</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/image/upscaler" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
                       </div>
                     </TabsContent>
                     <TabsContent value="ai" className="mt-6">
