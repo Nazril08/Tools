@@ -25,7 +25,8 @@ export default function AIOdownloaderPage() {
       }
       const result = await response.json()
       if (result.error) {
-        throw new Error(result.error)
+        const errorMessage = typeof result.error === "string" ? result.error : "API returned an unspecified error."
+        throw new Error(errorMessage)
       }
       setData(result)
     } catch (err: any) {
@@ -94,9 +95,7 @@ export default function AIOdownloaderPage() {
                       <p>Kualitas: {media.quality}</p>
                       <p className="text-sm text-muted-foreground">Ekstensi: {media.extension}</p>
                     </div>
-                    <a
-                      href={`/api/download-proxy?url=${encodeURIComponent(media.url)}&title=${encodeURIComponent(data.title)}&ext=${encodeURIComponent(media.extension)}`}
-                    >
+                    <a href={media.url} target="_blank" rel="noopener noreferrer">
                       <Button>Unduh</Button>
                     </a>
                   </div>
