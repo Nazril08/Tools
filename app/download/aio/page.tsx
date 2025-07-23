@@ -94,7 +94,9 @@ export default function AIOdownloaderPage() {
                       <p>Kualitas: {media.quality}</p>
                       <p className="text-sm text-muted-foreground">Ekstensi: {media.extension}</p>
                     </div>
-                    <a href={media.url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={`/api/download-proxy?url=${encodeURIComponent(media.url)}&title=${encodeURIComponent(data.title)}&ext=${encodeURIComponent(media.extension)}`}
+                    >
                       <Button>Unduh</Button>
                     </a>
                   </div>
