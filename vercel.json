@@ -1,5 +1,4 @@
 {
   "installCommand": "pnpm install",
-  "framework": "nextjs",
-  "outputDirectory": "out"
+  "framework": "nextjs"
 } 
