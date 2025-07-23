@@ -11,9 +11,22 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const fileResponse = await fetch(fileUrl)
+    // Dapatkan User-Agent dari permintaan asli (misalnya, dari browser seluler)
+    const userAgent = request.headers.get("user-agent")
+
+    // Siapkan header untuk permintaan eksternal, termasuk User-Agent
+    const fetchHeaders = new Headers()
+    if (userAgent) {
+      fetchHeaders.set("User-Agent", userAgent)
+    }
+
+    // Lakukan fetch ke URL eksternal dengan header yang sudah disesuaikan
+    const fileResponse = await fetch(fileUrl, {
+      headers: fetchHeaders,
+    })
 
     if (!fileResponse.ok) {
+      console.error(`External fetch failed with status: ${fileResponse.status} for URL: ${fileUrl}`)
       return NextResponse.json({ error: "Gagal mengunduh file dari URL eksternal" }, { status: fileResponse.status })
     }
 
