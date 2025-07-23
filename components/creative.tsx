@@ -260,17 +260,14 @@ const communityPosts = [
 // Sample data for sidebar navigation
 const sidebarItems = [
   {
+    id: "home",
     title: "Home",
     icon: <Home />,
-    isActive: true,
   },
   {
-    title: "Download",
-    icon: <Download />,
-  },
-  {
-    title: "AI",
-    icon: <Sparkles />,
+    id: "tools",
+    title: "Tools",
+    icon: <Wand2 />,
   },
 ]
 
@@ -353,8 +350,9 @@ export function YeyoCreative() {
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
-                      item.isActive ? "bg-primary/10 text-primary" : "hover:bg-muted",
+                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted",
                     )}
+                    onClick={() => setActiveTab(item.id)}
                   >
                     <div className="flex items-center gap-3">
                       {item.icon}
@@ -423,8 +421,9 @@ export function YeyoCreative() {
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
-                      item.isActive ? "bg-primary/10 text-primary" : "hover:bg-muted",
+                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted",
                     )}
+                    onClick={() => setActiveTab(item.id)}
                   >
                     <div className="flex items-center gap-3">
                       {item.icon}
@@ -521,45 +520,6 @@ export function YeyoCreative() {
 
         <main className="flex-1 p-3 sm:p-4 lg:p-6">
           <Tabs defaultValue="home" value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <div className="mb-6 sm:mb-8 flex flex-col gap-4">
-              <div className="overflow-x-auto">
-                <TabsList className="grid w-full min-w-[300px] max-w-[400px] grid-cols-3 rounded-2xl p-1">
-                  <TabsTrigger value="home" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
-                    Home
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="download"
-                    className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm"
-                  >
-                    Download
-                  </TabsTrigger>
-                  <TabsTrigger value="ai" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
-                    AI
-                  </TabsTrigger>
-                </TabsList>
-              </div>
-              <div className="flex sm:hidden gap-2">
-                <Button variant="outline" className="flex-1 rounded-2xl text-xs bg-transparent">
-                  <Download className="mr-1 h-3 w-3" />
-                  Install
-                </Button>
-                <Button className="flex-1 rounded-2xl text-xs">
-                  <Plus className="mr-1 h-3 w-3" />
-                  New
-                </Button>
-              </div>
-              <div className="hidden sm:flex justify-end gap-2">
-                <Button variant="outline" className="rounded-2xl bg-transparent">
-                  <Download className="mr-2 h-4 w-4" />
-                  Install App
-                </Button>
-                <Button className="rounded-2xl">
-                  <Plus className="mr-2 h-4 w-4" />
-                  New Project
-                </Button>
-              </div>
-            </div>
-
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -618,32 +578,48 @@ export function YeyoCreative() {
                   </section>
                 </TabsContent>
 
-                <TabsContent value="download">
-                  <div className="space-y-4">
-                    <h2 className="text-2xl font-semibold">Download</h2>
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                      <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                        <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                          <CardHeader>
-                            <CardTitle>AIO Downloader</CardTitle>
-                            <CardDescription>
-                              Unduh dari berbagai sumber seperti Spotify, YouTube, Instagram, dll.
-                            </CardDescription>
-                          </CardHeader>
-                          <CardFooter>
-                            <Link href="/download/aio" className="w-full">
-                              <Button className="w-full rounded-2xl">Buka</Button>
-                            </Link>
-                          </CardFooter>
-                        </Card>
-                      </motion.div>
-                    </div>
-                  </div>
-                </TabsContent>
-                <TabsContent value="ai">
-                  <div className="space-y-4">
-                    <h2 className="text-2xl font-semibold">AI</h2>
-                  </div>
+                <TabsContent value="tools" className="space-y-8 mt-0">
+                  <Tabs defaultValue="download" className="w-full">
+                    <TabsList className="grid w-full max-w-[400px] grid-cols-2 rounded-2xl p-1">
+                      <TabsTrigger value="download" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
+                        Download
+                      </TabsTrigger>
+                      <TabsTrigger value="ai" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
+                        AI
+                      </TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="download" className="mt-6">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>AIO Downloader</CardTitle>
+                              <CardDescription>
+                                Unduh dari berbagai sumber seperti Spotify, YouTube, Instagram, dll.
+                              </CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/download/aio" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="ai" className="mt-6">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>Coming Soon</CardTitle>
+                              <CardDescription>Fitur AI akan segera tersedia.</CardDescription>
+                            </CardHeader>
+                          </Card>
+                        </motion.div>
+                      </div>
+                    </TabsContent>
+                  </Tabs>
                 </TabsContent>
               </motion.div>
             </AnimatePresence>
