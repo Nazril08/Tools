@@ -19,7 +19,7 @@ export default function AIOdownloaderPage() {
     setData(null)
 
     try {
-      const response = await fetch(`/api/aio-proxy?url=${encodeURIComponent(url)}`)
+      const response = await fetch(`https://api.nzr.web.id/api/download/aio?url=${encodeURIComponent(url)}`)
       if (!response.ok) {
         throw new Error("Gagal mengambil data dari API")
       }
