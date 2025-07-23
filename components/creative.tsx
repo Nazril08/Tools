@@ -580,12 +580,15 @@ export function YeyoCreative() {
 
                 <TabsContent value="tools" className="space-y-8 mt-0">
                   <Tabs defaultValue="download" className="w-full">
-                    <TabsList className="grid w-full max-w-[600px] grid-cols-3 rounded-2xl p-1">
+                    <TabsList className="grid w-full max-w-[600px] grid-cols-4 rounded-2xl p-1">
                       <TabsTrigger value="download" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
                         Download
                       </TabsTrigger>
                       <TabsTrigger value="image" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
                         Image
+                      </TabsTrigger>
+                      <TabsTrigger value="utilities" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
+                        Utilities
                       </TabsTrigger>
                       <TabsTrigger value="ai" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
                         AI
@@ -659,6 +662,23 @@ export function YeyoCreative() {
                             </CardHeader>
                             <CardFooter>
                               <Link href="/image/upscaler" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
+                      </div>
+                    </TabsContent>
+                    <TabsContent value="utilities" className="mt-6">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>Cek Resi</CardTitle>
+                              <CardDescription>Lacak status pengiriman paket Anda.</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/utilities/cek-resi" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
                             </CardFooter>
