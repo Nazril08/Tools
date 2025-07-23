@@ -671,13 +671,31 @@ export function YeyoCreative() {
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
                           <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
-                              <CardTitle>Coming Soon</CardTitle>
-                              <CardDescription>Fitur AI akan segera tersedia.</CardDescription>
+                              <CardTitle>Animagine v2</CardTitle>
+                              <CardDescription>Hasilkan gambar gaya anime dari teks.</CardDescription>
                             </CardHeader>
+                            <CardFooter>
+                              <Link href="/ai/animagine" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
                           </Card>
                         </motion.div>
-                          </div>
-                </TabsContent>
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>Animagine (Advanced)</CardTitle>
+                              <CardDescription>Hasilkan gambar dengan kontrol parameter penuh.</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/ai/animagine-advanced" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
+                      </div>
+                    </TabsContent>
                   </Tabs>
                 </TabsContent>
               </motion.div>
