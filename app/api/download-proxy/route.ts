@@ -11,14 +11,25 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Dapatkan User-Agent dari permintaan asli (misalnya, dari browser seluler)
-    const userAgent = request.headers.get("user-agent")
-
-    // Siapkan header untuk permintaan eksternal, termasuk User-Agent
+    // Siapkan header untuk permintaan eksternal
     const fetchHeaders = new Headers()
-    if (userAgent) {
-      fetchHeaders.set("User-Agent", userAgent)
-    }
+
+    // Daftar header yang akan diteruskan dari permintaan klien
+    const headersToForward = [
+      "accept",
+      "accept-language",
+      "user-agent",
+      "range",
+      "referer",
+    ]
+
+    // Salin header dari permintaan asli ke permintaan fetch yang baru
+    headersToForward.forEach((headerName) => {
+      const headerValue = request.headers.get(headerName)
+      if (headerValue) {
+        fetchHeaders.set(headerName, headerValue)
+      }
+    })
 
     // Lakukan fetch ke URL eksternal dengan header yang sudah disesuaikan
     const fileResponse = await fetch(fileUrl, {
