@@ -110,7 +110,7 @@ export default function AnimagineAdvancedPage() {
 
       if (!response.ok) {
         const errData = await response.json()
-        throw new Error(errData.error || "Gagal mendapatkan saran dari Gemini.")
+        throw new Error(errData.error || "Gagal Generate dari Gemini.")
       }
 
       const data = await response.json()
@@ -196,7 +196,7 @@ export default function AnimagineAdvancedPage() {
             {isGeminiFill && (
               <Button type="button" onClick={handleGeminiFill} disabled={geminiLoading} className="w-full">
                 <Sparkles className="mr-2 h-4 w-4" />
-                {geminiLoading ? "Meminta Saran..." : "Isi Otomatis dengan Gemini"}
+                {geminiLoading ? "Generating..." : "Generate with Gemini"}
               </Button>
             )}
 
