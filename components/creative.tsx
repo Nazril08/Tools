@@ -280,6 +280,86 @@ const sidebarItems = [
   },
 ]
 
+const allTools = [
+  {
+    id: "aio_downloader",
+    title: "AIO Downloader",
+    description: "Unduh dari berbagai sumber seperti Spotify, YouTube, Instagram, dll.",
+    href: "/download/aio",
+    category: "download",
+  },
+  {
+    id: "yt_mp3",
+    title: "YouTube to MP3",
+    description: "Ubah video YouTube menjadi audio MP3.",
+    href: "/download/yt-mp3",
+    category: "download",
+  },
+  {
+    id: "yt_mp3_advanced",
+    title: "YouTube to MP3 (Advanced)",
+    description: "Unduh audio dari YouTube, mendukung hingga 6 jam.",
+    href: "/download/yt-mp3-advanced",
+    category: "download",
+  },
+    {
+    id: "yt_mp4",
+    title: "YouTube to MP4",
+    description: "Unduh video dari YouTube dengan pilihan kualitas.",
+    href: "/download/yt-mp4",
+    category: "download",
+  },
+  {
+    id: "yt_mp4_advanced",
+    title: "YouTube to MP4 (Advanced)",
+    description: "Unduh video dari YouTube, mendukung hingga 6 jam.",
+    href: "/download/yt-mp4-advanced",
+    category: "download",
+  },
+  {
+    id: "tiktok_downloader",
+    title: "TikTok Downloader",
+    description: "Unduh video atau audio dari TikTok.",
+    href: "/download/tiktok",
+    category: "download",
+  },
+  {
+    id: "remove_bg",
+    title: "Remove Background",
+    description: "Hapus latar belakang dari sebuah gambar.",
+    href: "/image/remove-background",
+    category: "image",
+  },
+  {
+    id: "image_upscaler",
+    title: "Image Upscaler",
+    description: "Tingkatkan resolusi gambar secara cerdas.",
+    href: "/image/upscaler",
+    category: "image",
+  },
+    {
+    id: "cek_resi",
+    title: "Cek Resi",
+    description: "Lacak status pengiriman paket Anda.",
+    href: "/utilities/cek-resi",
+    category: "utilities",
+  },
+  {
+    id: "animagine_v2",
+    title: "Animagine v2",
+    description: "Hasilkan gambar gaya anime dari teks.",
+    href: "/ai/animagine",
+    category: "ai",
+  },
+    {
+    id: "animagine_advanced",
+    title: "Animagine (Advanced)",
+    description: "Hasilkan gambar dengan kontrol parameter penuh.",
+    href: "/ai/animagine-advanced",
+    category: "ai",
+  },
+]
+
 export function YeyoCreative() {
   const { toast } = useToast()
   const [progress, setProgress] = useState(0)
@@ -289,13 +369,26 @@ export function YeyoCreative() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
   const [geminiApiKey, setGeminiApiKey] = useState("")
+  const [favoriteTools, setFavoriteTools] = useState<string[]>([])
 
   useEffect(() => {
     const savedKey = localStorage.getItem("geminiApiKey")
     if (savedKey) {
       setGeminiApiKey(savedKey)
     }
+    const savedFavorites = localStorage.getItem("favoriteTools")
+    if (savedFavorites) {
+      setFavoriteTools(JSON.parse(savedFavorites))
+    }
   }, [])
+  
+  const toggleFavorite = (toolId: string) => {
+    const newFavorites = favoriteTools.includes(toolId)
+      ? favoriteTools.filter((id) => id !== toolId)
+      : [...favoriteTools, toolId]
+    setFavoriteTools(newFavorites)
+    localStorage.setItem("favoriteTools", JSON.stringify(newFavorites))
+  }
 
   const handleSaveApiKey = () => {
     localStorage.setItem("geminiApiKey", geminiApiKey)
@@ -594,6 +687,38 @@ export function YeyoCreative() {
                       </div>
                     </motion.div>
                   </section>
+
+                  <section>
+                    <h3 className="text-xl font-semibold mb-4">Favorite Tools</h3>
+                    {favoriteTools.length > 0 ? (
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {allTools
+                          .filter((tool) => favoriteTools.includes(tool.id))
+                          .map((tool) => (
+                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                                <CardHeader className="flex-row items-start justify-between">
+                                  <div>
+                                    <CardTitle>{tool.title}</CardTitle>
+                                    <CardDescription>{tool.description}</CardDescription>
+                                  </div>
+                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                  </Button>
+                                </CardHeader>
+                                <CardFooter>
+                                  <Link href={tool.href} className="w-full">
+                                    <Button className="w-full rounded-2xl">Buka</Button>
+                                  </Link>
+                                </CardFooter>
+                              </Card>
+                            </motion.div>
+                          ))}
+                      </div>
+                    ) : (
+                      <p className="text-muted-foreground">No favorite tools yet. Click the star on any tool to add it here.</p>
+                    )}
+                  </section>
                 </TabsContent>
 
                 <TabsContent value="tools" className="space-y-8 mt-0">
@@ -613,165 +738,108 @@ export function YeyoCreative() {
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="download" className="mt-6">
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>AIO Downloader</CardTitle>
-                              <CardDescription>
-                                Unduh dari berbagai sumber seperti Spotify, YouTube, Instagram, dll.
-                              </CardDescription>
-                              </CardHeader>
-                            <CardFooter>
-                              <Link href="/download/aio" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                              </CardFooter>
-                            </Card>
-                          </motion.div>
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>YouTube to MP3</CardTitle>
-                              <CardDescription>Ubah video YouTube menjadi audio MP3.</CardDescription>
-                              </CardHeader>
-                            <CardFooter>
-                              <Link href="/download/yt-mp3" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                              </CardFooter>
-                            </Card>
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {allTools
+                          .filter((tool) => tool.category === "download")
+                          .map((tool) => (
+                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                                <CardHeader className="flex-row items-start justify-between">
+                                  <div>
+                                    <CardTitle>{tool.title}</CardTitle>
+                                    <CardDescription>{tool.description}</CardDescription>
+                                  </div>
+                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                  </Button>
+                                </CardHeader>
+                                <CardFooter>
+                                  <Link href={tool.href} className="w-full">
+                                    <Button className="w-full rounded-2xl">Buka</Button>
+                                  </Link>
+                                </CardFooter>
+                              </Card>
                             </motion.div>
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>YouTube to MP3 (Advanced)</CardTitle>
-                              <CardDescription>Unduh audio dari YouTube, mendukung hingga 6 jam.</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Link href="/download/yt-mp3-advanced" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>YouTube to MP4</CardTitle>
-                              <CardDescription>Unduh video dari YouTube dengan pilihan kualitas.</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Link href="/download/yt-mp4" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>YouTube to MP4 (Advanced)</CardTitle>
-                              <CardDescription>Unduh video dari YouTube, mendukung hingga 6 jam.</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Link href="/download/yt-mp4-advanced" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>TikTok Downloader</CardTitle>
-                              <CardDescription>Unduh video atau audio dari TikTok.</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Link href="/download/tiktok" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                    </div>
-                </TabsContent>
+                          ))}
+                      </div>
+                    </TabsContent>
                     <TabsContent value="image" className="mt-6">
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>Remove Background</CardTitle>
-                              <CardDescription>Hapus latar belakang dari sebuah gambar.</CardDescription>
-                              </CardHeader>
-                            <CardFooter>
-                              <Link href="/image/remove-background" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                              </CardFooter>
-                            </Card>
-                          </motion.div>
-                      <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>Image Upscaler</CardTitle>
-                              <CardDescription>Tingkatkan resolusi gambar secara cerdas.</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Link href="/image/upscaler" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                    </div>
-                </TabsContent>
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {allTools
+                          .filter((tool) => tool.category === "image")
+                          .map((tool) => (
+                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                                <CardHeader className="flex-row items-start justify-between">
+                                  <div>
+                                    <CardTitle>{tool.title}</CardTitle>
+                                    <CardDescription>{tool.description}</CardDescription>
+                                  </div>
+                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                  </Button>
+                                </CardHeader>
+                                <CardFooter>
+                                  <Link href={tool.href} className="w-full">
+                                    <Button className="w-full rounded-2xl">Buka</Button>
+                                  </Link>
+                                </CardFooter>
+                              </Card>
+                            </motion.div>
+                          ))}
+                      </div>
+                    </TabsContent>
                     <TabsContent value="utilities" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>Cek Resi</CardTitle>
-                              <CardDescription>Lacak status pengiriman paket Anda.</CardDescription>
-                            </CardHeader>
-                            <CardFooter>
-                              <Link href="/utilities/cek-resi" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                          </div>
-                </TabsContent>
+                        {allTools
+                          .filter((tool) => tool.category === "utilities")
+                          .map((tool) => (
+                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                                <CardHeader className="flex-row items-start justify-between">
+                                  <div>
+                                    <CardTitle>{tool.title}</CardTitle>
+                                    <CardDescription>{tool.description}</CardDescription>
+                                  </div>
+                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                  </Button>
+                                </CardHeader>
+                                <CardFooter>
+                                  <Link href={tool.href} className="w-full">
+                                    <Button className="w-full rounded-2xl">Buka</Button>
+                                  </Link>
+                                </CardFooter>
+                              </Card>
+                            </motion.div>
+                          ))}
+                      </div>
+                    </TabsContent>
                     <TabsContent value="ai" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>Animagine v2</CardTitle>
-                              <CardDescription>Hasilkan gambar gaya anime dari teks.</CardDescription>
-                        </CardHeader>
-                            <CardFooter>
-                              <Link href="/ai/animagine" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                            <CardHeader>
-                              <CardTitle>Animagine (Advanced)</CardTitle>
-                              <CardDescription>Hasilkan gambar dengan kontrol parameter penuh.</CardDescription>
-                        </CardHeader>
-                            <CardFooter>
-                              <Link href="/ai/animagine-advanced" className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                        </CardFooter>
-                      </Card>
-                        </motion.div>
-                          </div>
+                        {allTools
+                          .filter((tool) => tool.category === "ai")
+                          .map((tool) => (
+                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                                <CardHeader className="flex-row items-start justify-between">
+                                  <div>
+                                    <CardTitle>{tool.title}</CardTitle>
+                                    <CardDescription>{tool.description}</CardDescription>
+                                  </div>
+                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                  </Button>
+                                </CardHeader>
+                                <CardFooter>
+                                  <Link href={tool.href} className="w-full">
+                                    <Button className="w-full rounded-2xl">Buka</Button>
+                                  </Link>
+                                </CardFooter>
+                              </Card>
+                            </motion.div>
+                          ))}
+                      </div>
                     </TabsContent>
                   </Tabs>
                 </TabsContent>
