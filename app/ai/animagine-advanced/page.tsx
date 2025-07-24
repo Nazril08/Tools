@@ -9,9 +9,12 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Download, Image as ImageIcon } from "lucide-react"
+import { Download, Image as ImageIcon, Sparkles } from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "@/components/ui/toaster"
 
 export default function AnimagineAdvancedPage() {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     prompt: "",
     negative_prompt: "",
@@ -30,6 +33,8 @@ export default function AnimagineAdvancedPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
+  const [isGeminiFill, setIsGeminiFill] = useState(false)
+  const [geminiLoading, setGeminiLoading] = useState(false)
 
   const stylePresets = [
     "(None)",
@@ -64,6 +69,68 @@ export default function AnimagineAdvancedPage() {
 
   const handleSwitchChange = (id: string, checked: boolean) => {
     setFormData((prev) => ({ ...prev, [id]: checked }))
+  }
+
+  const handleGeminiFill = async () => {
+    const geminiApiKey = localStorage.getItem("geminiApiKey")
+    if (!geminiApiKey) {
+      toast({
+        variant: "destructive",
+        title: "Kunci API Diperlukan",
+        description: "Silakan masukkan Kunci API Gemini Anda di halaman Pengaturan.",
+      })
+      return
+    }
+
+    if (!formData.prompt) {
+      toast({
+        variant: "destructive",
+        title: "Prompt Diperlukan",
+        description: "Silakan masukkan prompt dasar terlebih dahulu.",
+      })
+      return
+    }
+
+    setGeminiLoading(true)
+    setError(null)
+
+    try {
+      const response = await fetch("/api/gemini-proxy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-gemini-api-key": geminiApiKey,
+        },
+        body: JSON.stringify({
+          prompt: formData.prompt,
+          samplers: samplers,
+          stylePresets: stylePresets.filter((p) => p !== "(None)"),
+        }),
+      })
+
+      if (!response.ok) {
+        const errData = await response.json()
+        throw new Error(errData.error || "Gagal mendapatkan saran dari Gemini.")
+      }
+
+      const data = await response.json()
+      setFormData((prev) => ({
+        ...prev,
+        prompt: data.enhanced_prompt,
+        negative_prompt: data.negative_prompt,
+        sampler: data.sampler,
+        style_preset: data.style_preset,
+      }))
+
+      toast({
+        title: "Sukses!",
+        description: "Formulir telah diisi otomatis oleh Gemini.",
+      })
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setGeminiLoading(false)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -111,6 +178,11 @@ export default function AnimagineAdvancedPage() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Switch id="gemini-fill" checked={isGeminiFill} onCheckedChange={setIsGeminiFill} />
+              <Label htmlFor="gemini-fill">Auto Fill with Gemini</Label>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="prompt">Prompt</Label>
@@ -121,6 +193,12 @@ export default function AnimagineAdvancedPage() {
                 <Textarea id="negative_prompt" value={formData.negative_prompt} onChange={handleChange} rows={4} />
               </div>
             </div>
+            {isGeminiFill && (
+              <Button type="button" onClick={handleGeminiFill} disabled={geminiLoading} className="w-full">
+                <Sparkles className="mr-2 h-4 w-4" />
+                {geminiLoading ? "Meminta Saran..." : "Isi Otomatis dengan Gemini"}
+              </Button>
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="space-y-2">
@@ -223,6 +301,7 @@ export default function AnimagineAdvancedPage() {
           </form>
         </CardContent>
       </Card>
+      <Toaster />
 
       {error && (
         <Card className="mt-4 bg-destructive">

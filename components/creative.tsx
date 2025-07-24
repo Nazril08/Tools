@@ -1,5 +1,6 @@
 "use client"
 
+
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -59,6 +60,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+import { Label } from "@/components/ui/label"
+import { Toaster } from "@/components/ui/toaster"
+import { useToast } from "@/components/ui/use-toast"
 
 // Sample data for apps
 const apps = [
@@ -269,15 +273,37 @@ const sidebarItems = [
     title: "Tools",
     icon: <Wand2 />,
   },
+  {
+    id: "settings",
+    title: "Settings",
+    icon: <Settings />,
+  },
 ]
 
 export function YeyoCreative() {
+  const { toast } = useToast()
   const [progress, setProgress] = useState(0)
   const [notifications, setNotifications] = useState(5)
   const [activeTab, setActiveTab] = useState("home")
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
+  const [geminiApiKey, setGeminiApiKey] = useState("")
+
+  useEffect(() => {
+    const savedKey = localStorage.getItem("geminiApiKey")
+    if (savedKey) {
+      setGeminiApiKey(savedKey)
+    }
+  }, [])
+
+  const handleSaveApiKey = () => {
+    localStorage.setItem("geminiApiKey", geminiApiKey)
+    toast({
+      title: "Sukses!",
+      description: "Kunci API Gemini Anda telah disimpan.",
+    })
+  }
 
   // Simulate progress loading
   useEffect(() => {
@@ -366,10 +392,6 @@ export function YeyoCreative() {
 
           <div className="border-t p-3">
             <div className="space-y-1">
-              <button className="flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
-                <Settings className="h-5 w-5" />
-                <span>Settings</span>
-              </button>
               <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-6 w-6">
@@ -437,10 +459,6 @@ export function YeyoCreative() {
 
           <div className="border-t p-3">
             <div className="space-y-1">
-              <button className="flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
-                <Settings className="h-5 w-5" />
-                <span>Settings</span>
-              </button>
               <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-6 w-6">
@@ -595,37 +613,37 @@ export function YeyoCreative() {
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="download" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>AIO Downloader</CardTitle>
                               <CardDescription>
                                 Unduh dari berbagai sumber seperti Spotify, YouTube, Instagram, dll.
                               </CardDescription>
-                            </CardHeader>
+                              </CardHeader>
                             <CardFooter>
                               <Link href="/download/aio" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>YouTube to MP3</CardTitle>
                               <CardDescription>Ubah video YouTube menjadi audio MP3.</CardDescription>
-                            </CardHeader>
+                              </CardHeader>
                             <CardFooter>
                               <Link href="/download/yt-mp3" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>TikTok Downloader</CardTitle>
                               <CardDescription>Unduh video atau audio dari TikTok.</CardDescription>
@@ -637,12 +655,12 @@ export function YeyoCreative() {
                             </CardFooter>
                           </Card>
                         </motion.div>
-                      </div>
-                    </TabsContent>
+                    </div>
+                </TabsContent>
                     <TabsContent value="image" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Remove Background</CardTitle>
                               <CardDescription>Hapus latar belakang dari sebuah gambar.</CardDescription>
@@ -654,8 +672,8 @@ export function YeyoCreative() {
                             </CardFooter>
                           </Card>
                         </motion.div>
-                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                      <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Image Upscaler</CardTitle>
                               <CardDescription>Tingkatkan resolusi gambar secara cerdas.</CardDescription>
@@ -664,63 +682,89 @@ export function YeyoCreative() {
                               <Link href="/image/upscaler" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                      </div>
+                        </CardFooter>
+                      </Card>
+                    </motion.div>
+                    </div>
                     </TabsContent>
                     <TabsContent value="utilities" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                      <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Cek Resi</CardTitle>
                               <CardDescription>Lacak status pengiriman paket Anda.</CardDescription>
-                            </CardHeader>
+                        </CardHeader>
                             <CardFooter>
                               <Link href="/utilities/cek-resi" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
+                        </CardFooter>
+                      </Card>
                         </motion.div>
-                      </div>
+                          </div>
                     </TabsContent>
                     <TabsContent value="ai" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Animagine v2</CardTitle>
                               <CardDescription>Hasilkan gambar gaya anime dari teks.</CardDescription>
-                            </CardHeader>
+                        </CardHeader>
                             <CardFooter>
                               <Link href="/ai/animagine" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
+                        </CardFooter>
+                      </Card>
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Animagine (Advanced)</CardTitle>
                               <CardDescription>Hasilkan gambar dengan kontrol parameter penuh.</CardDescription>
-                            </CardHeader>
+                        </CardHeader>
                             <CardFooter>
                               <Link href="/ai/animagine-advanced" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
+                        </CardFooter>
+                      </Card>
                         </motion.div>
-                      </div>
+                    </div>
                     </TabsContent>
                   </Tabs>
+                </TabsContent>
+
+                <TabsContent value="settings" className="space-y-8 mt-0">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Pengaturan</CardTitle>
+                      <CardDescription>Kelola pengaturan dan integrasi API Anda di sini.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="gemini-api-key">Kunci API Gemini</Label>
+                        <Input
+                          id="gemini-api-key"
+                          type="password"
+                          placeholder="Masukkan kunci API Gemini Anda"
+                          value={geminiApiKey}
+                          onChange={(e) => setGeminiApiKey(e.target.value)}
+                        />
+                        <p className="text-sm text-muted-foreground">
+                          Kunci API Anda disimpan dengan aman di browser Anda dan tidak pernah dibagikan.
+                        </p>
+                      </div>
+                      <Button onClick={handleSaveApiKey}>Simpan</Button>
+                    </CardContent>
+                  </Card>
                 </TabsContent>
               </motion.div>
             </AnimatePresence>
           </Tabs>
+          <Toaster />
         </main>
       </div>
     </div>
