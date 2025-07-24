@@ -52,14 +52,14 @@ export default function TikTokDownloaderPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="url">URL TikTok</Label>
-              <Input
-                id="url"
-                placeholder="https://vt.tiktok.com/..."
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                required
-              />
-            </div>
+                <Input
+                  id="url"
+                  placeholder="https://vt.tiktok.com/..."
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  required
+                />
+              </div>
             <Button type="submit" disabled={loading}>
               {loading ? "Memproses..." : "Proses"}
             </Button>
@@ -95,7 +95,7 @@ export default function TikTokDownloaderPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {data.hdplay && (
                 <Link href={data.hdplay} target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full">Unduh Video (HD)</Button>
+                <Button className="w-full">Unduh Video (HD)</Button>
                 </Link>
               )}
                {data.play && (

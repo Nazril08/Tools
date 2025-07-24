@@ -324,6 +324,13 @@ const allTools = [
     category: "download",
   },
   {
+    id: "facebook_downloader",
+    title: "Facebook Downloader",
+    description: "Unduh video atau audio dari Facebook.",
+    href: "/download/facebook",
+    category: "download",
+  },
+  {
     id: "remove_bg",
     title: "Remove Background",
     description: "Hapus latar belakang dari sebuah gambar.",
@@ -738,12 +745,12 @@ export function YeyoCreative() {
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="download" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {allTools
                           .filter((tool) => tool.category === "download")
                           .map((tool) => (
                             <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                                 <CardHeader className="flex-row items-start justify-between">
                                   <div>
                                     <CardTitle>{tool.title}</CardTitle>
@@ -752,24 +759,24 @@ export function YeyoCreative() {
                                   <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
                                     <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
                                   </Button>
-                                </CardHeader>
-                                <CardFooter>
+                              </CardHeader>
+                            <CardFooter>
                                   <Link href={tool.href} className="w-full">
-                                    <Button className="w-full rounded-2xl">Buka</Button>
-                                  </Link>
-                                </CardFooter>
-                              </Card>
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                              </CardFooter>
+                            </Card>
                             </motion.div>
                           ))}
-                      </div>
-                    </TabsContent>
+                    </div>
+                </TabsContent>
                     <TabsContent value="image" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {allTools
                           .filter((tool) => tool.category === "image")
                           .map((tool) => (
                             <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                                 <CardHeader className="flex-row items-start justify-between">
                                   <div>
                                     <CardTitle>{tool.title}</CardTitle>
@@ -778,17 +785,17 @@ export function YeyoCreative() {
                                   <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
                                     <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
                                   </Button>
-                                </CardHeader>
-                                <CardFooter>
+                              </CardHeader>
+                            <CardFooter>
                                   <Link href={tool.href} className="w-full">
-                                    <Button className="w-full rounded-2xl">Buka</Button>
-                                  </Link>
-                                </CardFooter>
-                              </Card>
-                            </motion.div>
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
                           ))}
-                      </div>
-                    </TabsContent>
+                    </div>
+                </TabsContent>
                     <TabsContent value="utilities" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {allTools
@@ -804,24 +811,24 @@ export function YeyoCreative() {
                                   <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
                                     <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
                                   </Button>
-                                </CardHeader>
-                                <CardFooter>
+                            </CardHeader>
+                            <CardFooter>
                                   <Link href={tool.href} className="w-full">
-                                    <Button className="w-full rounded-2xl">Buka</Button>
-                                  </Link>
-                                </CardFooter>
-                              </Card>
-                            </motion.div>
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
                           ))}
-                      </div>
-                    </TabsContent>
+                          </div>
+                </TabsContent>
                     <TabsContent value="ai" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {allTools
                           .filter((tool) => tool.category === "ai")
                           .map((tool) => (
                             <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                                 <CardHeader className="flex-row items-start justify-between">
                                   <div>
                                     <CardTitle>{tool.title}</CardTitle>
@@ -830,16 +837,16 @@ export function YeyoCreative() {
                                   <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
                                     <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
                                   </Button>
-                                </CardHeader>
-                                <CardFooter>
+                        </CardHeader>
+                            <CardFooter>
                                   <Link href={tool.href} className="w-full">
-                                    <Button className="w-full rounded-2xl">Buka</Button>
-                                  </Link>
-                                </CardFooter>
-                              </Card>
-                            </motion.div>
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
                           ))}
-                      </div>
+                          </div>
                     </TabsContent>
                   </Tabs>
                 </TabsContent>
