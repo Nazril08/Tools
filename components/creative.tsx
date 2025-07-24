@@ -395,10 +395,10 @@ export function YeyoCreative() {
               <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
+                    <AvatarImage src="/nazril.png" alt="User" />
+                    <AvatarFallback>N</AvatarFallback>
                   </Avatar>
-                  <span>John Doe</span>
+                  <span>Nazril</span>
                 </div>
                 <Badge variant="outline" className="ml-auto">
                   Pro
@@ -462,10 +462,10 @@ export function YeyoCreative() {
               <button className="flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium hover:bg-muted">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-6 w-6">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                    <AvatarFallback>JD</AvatarFallback>
+                    <AvatarImage src="/nazril.png" alt="User" />
+                    <AvatarFallback>N</AvatarFallback>
                   </Avatar>
-                  <span>John Doe</span>
+                  <span>Nazril</span>
                 </div>
                 <Badge variant="outline" className="ml-auto">
                   Pro
@@ -529,8 +529,8 @@ export function YeyoCreative() {
               </TooltipProvider>
 
               <Avatar className="h-8 w-8 sm:h-9 sm:w-9 border-2 border-primary">
-                <AvatarImage src="/placeholder.svg?height=40&width=40" alt="User" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarImage src="/nazril.png" alt="User" />
+                <AvatarFallback>N</AvatarFallback>
               </Avatar>
             </div>
           </div>
@@ -641,7 +641,7 @@ export function YeyoCreative() {
                               </Link>
                               </CardFooter>
                             </Card>
-                          </motion.div>
+                            </motion.div>
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
                           <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
@@ -658,20 +658,20 @@ export function YeyoCreative() {
                     </div>
                 </TabsContent>
                     <TabsContent value="image" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
                           <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Remove Background</CardTitle>
                               <CardDescription>Hapus latar belakang dari sebuah gambar.</CardDescription>
-                            </CardHeader>
+                              </CardHeader>
                             <CardFooter>
                               <Link href="/image/remove-background" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
                       <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
                           <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
@@ -682,28 +682,28 @@ export function YeyoCreative() {
                               <Link href="/image/upscaler" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                        </CardFooter>
-                      </Card>
-                    </motion.div>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
                     </div>
-                    </TabsContent>
+                </TabsContent>
                     <TabsContent value="utilities" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                      <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                          <Card className="overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
                               <CardTitle>Cek Resi</CardTitle>
                               <CardDescription>Lacak status pengiriman paket Anda.</CardDescription>
-                        </CardHeader>
+                            </CardHeader>
                             <CardFooter>
                               <Link href="/utilities/cek-resi" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                        </CardFooter>
-                      </Card>
+                            </CardFooter>
+                          </Card>
                         </motion.div>
                           </div>
-                    </TabsContent>
+                </TabsContent>
                     <TabsContent value="ai" className="mt-6">
                       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
@@ -716,8 +716,8 @@ export function YeyoCreative() {
                               <Link href="/ai/animagine" className="w-full">
                                 <Button className="w-full rounded-2xl">Buka</Button>
                               </Link>
-                        </CardFooter>
-                      </Card>
+                            </CardFooter>
+                          </Card>
                         </motion.div>
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
                           <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
@@ -732,7 +732,7 @@ export function YeyoCreative() {
                         </CardFooter>
                       </Card>
                         </motion.div>
-                    </div>
+                          </div>
                     </TabsContent>
                   </Tabs>
                 </TabsContent>
@@ -742,9 +742,9 @@ export function YeyoCreative() {
                     <CardHeader>
                       <CardTitle>Pengaturan</CardTitle>
                       <CardDescription>Kelola pengaturan dan integrasi API Anda di sini.</CardDescription>
-                    </CardHeader>
+                        </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="space-y-2">
+                          <div className="space-y-2">
                         <Label htmlFor="gemini-api-key">Kunci API Gemini</Label>
                         <Input
                           id="gemini-api-key"
@@ -756,10 +756,10 @@ export function YeyoCreative() {
                         <p className="text-sm text-muted-foreground">
                           Kunci API Anda disimpan dengan aman di browser Anda dan tidak pernah dibagikan.
                         </p>
-                      </div>
+                            </div>
                       <Button onClick={handleSaveApiKey}>Simpan</Button>
-                    </CardContent>
-                  </Card>
+                        </CardContent>
+                      </Card>
                 </TabsContent>
               </motion.div>
             </AnimatePresence>
