@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import Link from "next/link"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function TikTokDownloaderPage() {
   const [url, setUrl] = useState("")
@@ -20,14 +22,14 @@ export default function TikTokDownloaderPage() {
     setData(null)
 
     try {
-      const response = await fetch(`https://api.nzr.web.id/api/download/tiktok?url=${encodeURIComponent(url)}`)
-      if (!response.ok) {
-        throw new Error("Gagal mengambil data dari API")
-      }
+      const response = await fetch(
+        `https://api.nzr.web.id/api/download/tiktok?url=${encodeURIComponent(url)}`
+      )
       const result = await response.json()
-      if (result.error) {
-        const errorMessage = typeof result.error === "string" ? result.error : "API returned an unspecified error."
-        throw new Error(errorMessage)
+
+      // Assuming a successful response will have an 'aweme_id'
+      if (response.status !== 200 || !result.aweme_id) {
+        throw new Error(result.message || "Gagal mengunduh video TikTok.")
       }
       setData(result)
     } catch (err: any) {
@@ -42,73 +44,70 @@ export default function TikTokDownloaderPage() {
       <Card>
         <CardHeader>
           <CardTitle>TikTok Downloader</CardTitle>
-          <CardDescription>Unduh video atau audio dari tautan TikTok.</CardDescription>
+          <CardDescription>
+            Unduh video atau audio dari TikTok tanpa watermark.
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="url">URL Video TikTok</Label>
-                <Input
-                  id="url"
-                  placeholder="https://vt.tiktok.com/..."
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  required
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="url">URL TikTok</Label>
+              <Input
+                id="url"
+                placeholder="https://vt.tiktok.com/..."
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                required
+              />
             </div>
-            <Button type="submit" className="mt-4" disabled={loading}>
-              {loading ? "Memproses..." : "Execute"}
+            <Button type="submit" disabled={loading}>
+              {loading ? "Memproses..." : "Proses"}
             </Button>
           </form>
         </CardContent>
       </Card>
 
       {error && (
-        <Card className="mt-4 bg-destructive">
-          <CardHeader>
-            <CardTitle>Error</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>{error}</p>
-          </CardContent>
-        </Card>
+        <Alert variant="destructive" className="mt-4">
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
       {data && (
         <Card className="mt-4">
           <CardHeader>
-            <CardTitle>{data.title}</CardTitle>
-            <CardDescription>Oleh: {data.author.nickname}</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <img src={data.cover} alt={data.title} className="rounded-lg" />
-            <div className="grid grid-cols-2 gap-2 text-sm text-center">
+            <div className="flex items-center gap-3">
+              <Avatar>
+                <AvatarImage src={data.author.avatar} alt={data.author.nickname} />
+                <AvatarFallback>{data.author.nickname.charAt(0)}</AvatarFallback>
+              </Avatar>
               <div>
-                <p className="font-semibold">Likes</p>
-                <p>{data.digg_count.toLocaleString()}</p>
-              </div>
-              <div>
-                <p className="font-semibold">Plays</p>
-                <p>{data.play_count.toLocaleString()}</p>
+                <CardTitle className="text-lg">{data.author.nickname}</CardTitle>
+                <CardDescription className="truncate">{data.title}</CardDescription>
               </div>
             </div>
-            <Separator />
-            <div className="space-y-2">
-              <a href={data.hdplay} target="_blank" rel="noopener noreferrer" className="w-full block">
-                <Button className="w-full">Unduh Video (HD)</Button>
-              </a>
-              <a href={data.wmplay} target="_blank" rel="noopener noreferrer" className="w-full block">
-                <Button variant="secondary" className="w-full">
-                  Unduh Video (Watermark)
-                </Button>
-              </a>
-              <a href={data.music} target="_blank" rel="noopener noreferrer" className="w-full block">
-                <Button variant="outline" className="w-full">
-                  Unduh Audio Saja
-                </Button>
-              </a>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex justify-center">
+              <img src={data.cover} alt={data.title} className="rounded-lg max-w-xs w-full" />
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {data.hdplay && (
+                <Link href={data.hdplay} target="_blank" rel="noopener noreferrer">
+                  <Button className="w-full">Unduh Video (HD)</Button>
+                </Link>
+              )}
+               {data.play && (
+                <Link href={data.play} target="_blank" rel="noopener noreferrer">
+                  <Button variant="secondary" className="w-full">Video (WM)</Button>
+                </Link>
+              )}
+              {data.music && (
+                <Link href={data.music} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" className="w-full">Unduh Audio</Button>
+                </Link>
+              )}
             </div>
           </CardContent>
         </Card>

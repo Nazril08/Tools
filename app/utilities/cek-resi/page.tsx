@@ -107,29 +107,18 @@ export default function CekResiPage() {
         </Card>
       )}
 
-      {data && (
+      {data && data.history && (
         <Card className="mt-4">
           <CardHeader>
             <CardTitle>Hasil Pelacakan</CardTitle>
             <CardDescription>
-              {data.summary.courier} - {data.summary.awb}
+              {data.courier} - {data.resi}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <h3 className="font-semibold">Status: {data.summary.status}</h3>
-              <p className="text-sm text-muted-foreground">{data.summary.desc}</p>
-            </div>
-            <Separator />
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="font-semibold">Pengirim</p>
-                <p>{data.detail.shipper}</p>
-              </div>
-              <div>
-                <p className="font-semibold">Penerima</p>
-                <p>{data.detail.receiver}</p>
-              </div>
+              <h3 className="font-semibold">Status: {data.status}</h3>
+              <p className="text-sm text-muted-foreground">{data.message}</p>
             </div>
             <Separator />
             <div>
@@ -138,7 +127,7 @@ export default function CekResiPage() {
                 {data.history.map((h: any, index: number) => (
                   <div key={index} className="flex gap-4">
                     <div className="text-sm text-muted-foreground whitespace-nowrap">
-                      {new Date(h.date).toLocaleString("id-ID", {
+                      {new Date(h.timestamp).toLocaleString("id-ID", {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",
@@ -149,7 +138,7 @@ export default function CekResiPage() {
                     <div className="relative w-full">
                       <div className="absolute left-[-11px] top-0 h-full w-0.5 bg-border" />
                       <div className="absolute left-[-14px] top-2 h-3 w-3 rounded-full bg-primary" />
-                      <p className="pl-4">{h.desc}</p>
+                      <p className="pl-4">{h.description}</p>
                     </div>
                   </div>
                 ))}

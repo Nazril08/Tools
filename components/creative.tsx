@@ -376,7 +376,7 @@ export function YeyoCreative() {
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
-                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted",
+                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted"
                     )}
                     onClick={() => setActiveTab(item.id)}
                   >
@@ -443,7 +443,7 @@ export function YeyoCreative() {
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
-                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted",
+                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted"
                     )}
                     onClick={() => setActiveTab(item.id)}
                   >
@@ -642,6 +642,45 @@ export function YeyoCreative() {
                               </CardFooter>
                             </Card>
                             </motion.div>
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>YouTube to MP3 (Advanced)</CardTitle>
+                              <CardDescription>Unduh audio dari YouTube, mendukung hingga 6 jam.</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/download/yt-mp3-advanced" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>YouTube to MP4</CardTitle>
+                              <CardDescription>Unduh video dari YouTube dengan pilihan kualitas.</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/download/yt-mp4" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
+                        <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                            <CardHeader>
+                              <CardTitle>YouTube to MP4 (Advanced)</CardTitle>
+                              <CardDescription>Unduh video dari YouTube, mendukung hingga 6 jam.</CardDescription>
+                            </CardHeader>
+                            <CardFooter>
+                              <Link href="/download/yt-mp4-advanced" className="w-full">
+                                <Button className="w-full rounded-2xl">Buka</Button>
+                              </Link>
+                            </CardFooter>
+                          </Card>
+                        </motion.div>
                         <motion.div whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
                           <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
                             <CardHeader>
