@@ -365,6 +365,13 @@ const allTools = [
     href: "/ai/animagine-advanced",
     category: "ai",
   },
+  {
+    id: "tiktok_transcript",
+    title: "TikTok Transcript",
+    description: "Dapatkan transkrip dari video TikTok.",
+    href: "/ai/tiktok-transcript",
+    category: "ai",
+  },
 ]
 
 export function YeyoCreative() {
