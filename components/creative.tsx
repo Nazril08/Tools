@@ -280,6 +280,13 @@ const sidebarItems = [
   },
 ]
 
+const toolCategories = [
+  { id: "download", title: "Download" },
+  { id: "image", title: "Image" },
+  { id: "utilities", title: "Utilities" },
+  { id: "ai", title: "AI" },
+]
+
 const allTools = [
   {
     id: "aio_downloader",
@@ -379,6 +386,8 @@ export function YeyoCreative() {
   const [progress, setProgress] = useState(0)
   const [notifications, setNotifications] = useState(5)
   const [activeTab, setActiveTab] = useState("home")
+  const [activeToolCategory, setActiveToolCategory] = useState("download")
+  const [isToolsExpanded, setIsToolsExpanded] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
@@ -479,19 +488,44 @@ export function YeyoCreative() {
           <ScrollArea className="flex-1 px-3 py-2">
             <div className="space-y-1">
               {sidebarItems.map((item) => (
-                <div key={item.title} className="mb-1">
+                <div key={item.id}>
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
-                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted"
+                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted",
                     )}
-                    onClick={() => setActiveTab(item.id)}
+                    onClick={() => {
+                      setActiveTab(item.id)
+                      if (item.id === "tools") {
+                        setIsToolsExpanded(!isToolsExpanded)
+                      }
+                    }}
                   >
                     <div className="flex items-center gap-3">
                       {item.icon}
                       <span>{item.title}</span>
                     </div>
+                    {item.id === "tools" && <ChevronDown className={cn("h-4 w-4 transition-transform", isToolsExpanded && "rotate-180")} />}
                   </button>
+                  {item.id === "tools" && isToolsExpanded && (
+                    <div className="ml-4 mt-1 space-y-1 border-l pl-4">
+                      {toolCategories.map((category) => (
+                        <button
+                          key={category.id}
+                          className={cn(
+                            "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium",
+                            activeToolCategory === category.id ? "bg-muted text-primary" : "hover:bg-muted/50",
+                          )}
+                          onClick={() => {
+                            setActiveToolCategory(category.id)
+                            setMobileMenuOpen(false)
+                          }}
+                        >
+                          {category.title}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -546,19 +580,41 @@ export function YeyoCreative() {
           <ScrollArea className="flex-1 px-3 py-2">
             <div className="space-y-1">
               {sidebarItems.map((item) => (
-                <div key={item.title} className="mb-1">
+                <div key={item.id}>
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
-                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted"
+                      activeTab === item.id ? "bg-primary/10 text-primary" : "hover:bg-muted",
                     )}
-                    onClick={() => setActiveTab(item.id)}
+                    onClick={() => {
+                      setActiveTab(item.id)
+                      if (item.id === "tools") {
+                        setIsToolsExpanded(!isToolsExpanded)
+                      }
+                    }}
                   >
                     <div className="flex items-center gap-3">
                       {item.icon}
                       <span>{item.title}</span>
                     </div>
+                    {item.id === "tools" && <ChevronDown className={cn("h-4 w-4 transition-transform", isToolsExpanded && "rotate-180")} />}
                   </button>
+                   {item.id === "tools" && isToolsExpanded && (
+                    <div className="ml-4 mt-1 space-y-1 border-l pl-4">
+                      {toolCategories.map((category) => (
+                        <button
+                          key={category.id}
+                          className={cn(
+                            "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium",
+                            activeToolCategory === category.id ? "bg-muted text-primary" : "hover:bg-muted/50",
+                          )}
+                          onClick={() => setActiveToolCategory(category.id)}
+                        >
+                          {category.title}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -736,8 +792,8 @@ export function YeyoCreative() {
                 </TabsContent>
 
                 <TabsContent value="tools" className="space-y-8 mt-0">
-                  <Tabs defaultValue="download" className="w-full">
-                    <TabsList className="grid w-full max-w-[600px] grid-cols-4 rounded-2xl p-1">
+                  <Tabs value={activeToolCategory} onValueChange={setActiveToolCategory} className="w-full">
+                    <TabsList className="hidden w-full max-w-[600px] grid-cols-4 rounded-2xl p-1 md:grid">
                       <TabsTrigger value="download" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
                         Download
                       </TabsTrigger>
@@ -752,7 +808,7 @@ export function YeyoCreative() {
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="download" className="mt-6">
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {allTools
                           .filter((tool) => tool.category === "download")
                           .map((tool) => (
