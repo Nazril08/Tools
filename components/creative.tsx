@@ -274,6 +274,11 @@ const sidebarItems = [
     icon: <Wand2 />,
   },
   {
+    id: "ai",
+    title: "AI Chat",
+    icon: <Sparkles />,
+  },
+  {
     id: "settings",
     title: "Settings",
     icon: <Settings />,
@@ -494,8 +499,9 @@ export function YeyoCreative() {
 
           <ScrollArea className="flex-1 px-3 py-2">
             <div className="space-y-1">
-              {sidebarItems.map((item) => (
-                <div key={item.id}>
+              {sidebarItems.map((item) => {
+                const isTools = item.id === "tools";
+                const content = (
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
@@ -503,7 +509,7 @@ export function YeyoCreative() {
                     )}
                     onClick={() => {
                       setActiveTab(item.id)
-                      if (item.id === "tools") {
+                      if (isTools) {
                         setIsToolsExpanded(!isToolsExpanded)
                       }
                     }}
@@ -512,29 +518,41 @@ export function YeyoCreative() {
                       {item.icon}
                       <span>{item.title}</span>
                     </div>
-                    {item.id === "tools" && <ChevronDown className={cn("h-4 w-4 transition-transform", isToolsExpanded && "rotate-180")} />}
+                    {isTools && <ChevronDown className={cn("h-4 w-4 transition-transform", isToolsExpanded && "rotate-180")} />}
                   </button>
-                  {item.id === "tools" && isToolsExpanded && (
-                    <div className="ml-4 mt-1 space-y-1 border-l pl-4">
-                      {toolCategories.map((category) => (
-                        <button
-                          key={category.id}
-                          className={cn(
-                            "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium",
-                            activeToolCategory === category.id ? "bg-muted text-primary" : "hover:bg-muted/50",
-                          )}
-                          onClick={() => {
-                            setActiveToolCategory(category.id)
-                            setMobileMenuOpen(false)
-                          }}
-                        >
-                          {category.title}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+                );
+
+                return (
+                  <div key={item.id}>
+                    {isTools ? (
+                      content
+                    ) : (
+                      <Link href={item.id === 'home' ? '/' : `/${item.id}`}>
+                        {content}
+                      </Link>
+                    )}
+                    {isTools && isToolsExpanded && (
+                      <div className="ml-4 mt-1 space-y-1 border-l pl-4">
+                        {toolCategories.map((category) => (
+                          <button
+                            key={category.id}
+                            className={cn(
+                              "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium",
+                              activeToolCategory === category.id ? "bg-muted text-primary" : "hover:bg-muted/50",
+                            )}
+                            onClick={() => {
+                              setActiveToolCategory(category.id)
+                              setMobileMenuOpen(false)
+                            }}
+                          >
+                            {category.title}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </ScrollArea>
 
@@ -586,8 +604,9 @@ export function YeyoCreative() {
 
           <ScrollArea className="flex-1 px-3 py-2">
             <div className="space-y-1">
-              {sidebarItems.map((item) => (
-                <div key={item.id}>
+               {sidebarItems.map((item) => {
+                const isTools = item.id === "tools";
+                const content = (
                   <button
                     className={cn(
                       "flex w-full items-center justify-between rounded-2xl px-3 py-2 text-sm font-medium",
@@ -595,7 +614,7 @@ export function YeyoCreative() {
                     )}
                     onClick={() => {
                       setActiveTab(item.id)
-                      if (item.id === "tools") {
+                      if (isTools) {
                         setIsToolsExpanded(!isToolsExpanded)
                       }
                     }}
@@ -604,26 +623,38 @@ export function YeyoCreative() {
                       {item.icon}
                       <span>{item.title}</span>
                     </div>
-                    {item.id === "tools" && <ChevronDown className={cn("h-4 w-4 transition-transform", isToolsExpanded && "rotate-180")} />}
+                    {isTools && <ChevronDown className={cn("h-4 w-4 transition-transform", isToolsExpanded && "rotate-180")} />}
                   </button>
-                   {item.id === "tools" && isToolsExpanded && (
-                    <div className="ml-4 mt-1 space-y-1 border-l pl-4">
-                      {toolCategories.map((category) => (
-                        <button
-                          key={category.id}
-                          className={cn(
-                            "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium",
-                            activeToolCategory === category.id ? "bg-muted text-primary" : "hover:bg-muted/50",
-                          )}
-                          onClick={() => setActiveToolCategory(category.id)}
-                        >
-                          {category.title}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+                );
+
+                return (
+                  <div key={item.id}>
+                    {isTools ? (
+                      content
+                    ) : (
+                      <Link href={item.id === 'ai' ? '/ai/chat' : (item.id === 'home' ? '/' : `/${item.id}`)}>
+                        {content}
+                      </Link>
+                    )}
+                     {isTools && isToolsExpanded && (
+                      <div className="ml-4 mt-1 space-y-1 border-l pl-4">
+                        {toolCategories.map((category) => (
+                          <button
+                            key={category.id}
+                            className={cn(
+                              "flex w-full items-center rounded-2xl px-3 py-2 text-sm font-medium",
+                              activeToolCategory === category.id ? "bg-muted text-primary" : "hover:bg-muted/50",
+                            )}
+                            onClick={() => setActiveToolCategory(category.id)}
+                          >
+                            {category.title}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </ScrollArea>
 
