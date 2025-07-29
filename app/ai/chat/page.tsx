@@ -127,53 +127,66 @@ export default function AiChatPage() {
 
         const userMessage: Message = { sender: 'user', text: input };
         
-        let currentSessionId = activeSessionId;
-        // If there's no active session, create a new one
-        if (!activeSession) {
+        let sessionId = activeSessionId;
+        let newSessions = [...sessions];
+
+        if (!sessionId) {
             const newSession: ChatSession = {
                 id: Date.now().toString(),
-                // Generate title from the first message
                 title: input.length > 30 ? input.substring(0, 27) + "..." : input,
                 messages: [userMessage]
             };
-            setSessions(prev => [newSession, ...prev]);
-            setActiveSessionId(newSession.id);
-            currentSessionId = newSession.id;
+            newSessions = [newSession, ...newSessions];
+            sessionId = newSession.id;
         } else {
-             setSessions(prev => prev.map(s => 
-                s.id === activeSessionId 
+            newSessions = newSessions.map(s => 
+                s.id === sessionId 
                 ? { ...s, messages: [...s.messages, userMessage] } 
                 : s
-            ));
+            );
         }
-        
+
+        setSessions(newSessions);
+        setActiveSessionId(sessionId);
         setInput("");
         setLoading(true);
 
         try {
-            const response = await fetch(`https://api.nzr.web.id/api/ai/chat?question=${encodeURIComponent(input)}&model=${model}&system_prompt=${encodeURIComponent(systemPrompt)}`);
+            const queryParams = new URLSearchParams({
+                question: input,
+                model,
+                system_prompt: systemPrompt,
+            });
+
+            const apiResponse = await fetch(`https://api.nzr.web.id/api/ai/chat?${queryParams.toString()}`);
             
-            if (!response.ok) {
-                 const errorText = await response.text();
-                 throw new Error(errorText || `HTTP error! status: ${response.status}`);
+            if (!apiResponse.ok) {
+                 const errorText = await apiResponse.text();
+                 throw new Error(errorText || `HTTP error! status: ${apiResponse.status}`);
             }
 
-            const result = await response.json();
+            const result = await apiResponse.json();
             const botMessage: Message = { sender: 'bot', text: result.response };
             
             setSessions(prev => prev.map(s => 
-                s.id === currentSessionId 
+                s.id === sessionId 
                 ? { ...s, messages: [...s.messages, botMessage] } 
                 : s
             ));
 
         } catch (err: any) {
             const errorMessage: Message = { sender: 'bot', text: `Sorry, something went wrong: ${err.message}` };
-             setSessions(prev => prev.map(s => 
-                s.id === currentSessionId
-                ? { ...s, messages: [...s.messages, errorMessage] } 
-                : s
-            ));
+            setSessions(prev => {
+                const latestSession = prev.find(s => s.id === sessionId);
+                if(latestSession) {
+                    return prev.map(s =>
+                        s.id === latestSession.id
+                        ? { ...s, messages: [...s.messages, errorMessage] }
+                        : s
+                    );
+                }
+                return prev;
+            });
         } finally {
             setLoading(false);
         }

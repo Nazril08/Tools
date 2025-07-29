@@ -371,6 +371,13 @@ const allTools = [
     category: "utilities",
   },
   {
+    id: 'sonu-music',
+    title: 'Sonu Music',
+    description: 'Hasilkan musik orisinal dari teks dengan AI.',
+    category: 'utilities',
+    href: '/utilities/sonu-music'
+  },
+  {
     id: "animagine_v2",
     title: "Animagine v2",
     description: "Hasilkan gambar gaya anime dari teks.",
@@ -403,14 +410,9 @@ export function YeyoCreative() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
-  const [geminiApiKey, setGeminiApiKey] = useState("")
   const [favoriteTools, setFavoriteTools] = useState<string[]>([])
 
   useEffect(() => {
-    const savedKey = localStorage.getItem("geminiApiKey")
-    if (savedKey) {
-      setGeminiApiKey(savedKey)
-    }
     const savedFavorites = localStorage.getItem("favoriteTools")
     if (savedFavorites) {
       setFavoriteTools(JSON.parse(savedFavorites))
@@ -423,14 +425,6 @@ export function YeyoCreative() {
       : [...favoriteTools, toolId]
     setFavoriteTools(newFavorites)
     localStorage.setItem("favoriteTools", JSON.stringify(newFavorites))
-  }
-
-  const handleSaveApiKey = () => {
-    localStorage.setItem("geminiApiKey", geminiApiKey)
-    toast({
-      title: "Sukses!",
-      description: "Kunci API Gemini Anda telah disimpan.",
-    })
   }
 
   // Simulate progress loading
@@ -938,28 +932,7 @@ export function YeyoCreative() {
                 </TabsContent>
 
                 <TabsContent value="settings" className="space-y-8 mt-0">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Pengaturan</CardTitle>
-                      <CardDescription>Kelola pengaturan dan integrasi API Anda di sini.</CardDescription>
-                        </CardHeader>
-                    <CardContent className="space-y-4">
-                          <div className="space-y-2">
-                        <Label htmlFor="gemini-api-key">Kunci API Gemini</Label>
-                        <Input
-                          id="gemini-api-key"
-                          type="password"
-                          placeholder="Masukkan kunci API Gemini Anda"
-                          value={geminiApiKey}
-                          onChange={(e) => setGeminiApiKey(e.target.value)}
-                        />
-                        <p className="text-sm text-muted-foreground">
-                          Kunci API Anda disimpan dengan aman di browser Anda dan tidak pernah dibagikan.
-                        </p>
-                            </div>
-                      <Button onClick={handleSaveApiKey}>Simpan</Button>
-                        </CardContent>
-                      </Card>
+                  <p className="text-muted-foreground">The settings page has been moved. Please access it from the sidebar.</p>
                 </TabsContent>
               </motion.div>
             </AnimatePresence>
