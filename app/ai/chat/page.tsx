@@ -206,12 +206,12 @@ export default function AiChatPage() {
             </Card>
 
             <Card className="flex-1 flex flex-col">
-                <CardHeader className="flex-row items-center justify-between">
+                <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <CardTitle>AI Chat</CardTitle>
                         <CardDescription>Obrolan langsung dengan model AI pilihan Anda.</CardDescription>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex w-full items-center gap-2 sm:w-auto">
                         <Sheet>
                             <SheetTrigger asChild>
                                 <Button variant="outline" size="icon" className="md:hidden">
@@ -245,7 +245,7 @@ export default function AiChatPage() {
                          <Button variant="outline" size="icon" onClick={handleNewChat} title="New Chat">
                             <PlusSquare size={20} />
                         </Button>
-                        <div className="w-48">
+                        <div className="flex-1">
                             <Select value={model} onValueChange={setModel} disabled={loading}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Pilih model" />
