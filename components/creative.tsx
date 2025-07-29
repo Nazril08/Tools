@@ -351,6 +351,13 @@ const allTools = [
     href: "/image/upscaler",
     category: "image",
   },
+  {
+    id: "upscale_v2",
+    title: "Upscale V2",
+    description: "Tingkatkan resolusi gambar ke kualitas 4K.",
+    href: "/image/upscale-v2",
+    category: "image",
+  },
     {
     id: "cek_resi",
     title: "Cek Resi",
@@ -791,127 +798,112 @@ export function YeyoCreative() {
                   </section>
                 </TabsContent>
 
-                <TabsContent value="tools" className="space-y-8 mt-0">
-                  <Tabs value={activeToolCategory} onValueChange={setActiveToolCategory} className="w-full">
-                    <TabsList className="hidden w-full max-w-[600px] grid-cols-4 rounded-2xl p-1 md:grid">
-                      <TabsTrigger value="download" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
-                        Download
-                      </TabsTrigger>
-                      <TabsTrigger value="image" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
-                        Image
-                      </TabsTrigger>
-                      <TabsTrigger value="utilities" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
-                        Utilities
-                      </TabsTrigger>
-                      <TabsTrigger value="ai" className="rounded-xl data-[state=active]:rounded-xl text-xs sm:text-sm">
-                        AI
-                      </TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="download" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {allTools
-                          .filter((tool) => tool.category === "download")
-                          .map((tool) => (
-                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                                <CardHeader className="flex-row items-start justify-between">
-                                  <div>
-                                    <CardTitle>{tool.title}</CardTitle>
-                                    <CardDescription>{tool.description}</CardDescription>
-                                  </div>
-                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
-                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
-                                  </Button>
-                              </CardHeader>
-                            <CardFooter>
-                                  <Link href={tool.href} className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                              </CardFooter>
-                            </Card>
-                            </motion.div>
-                          ))}
-                    </div>
-                </TabsContent>
-                    <TabsContent value="image" className="mt-6">
+                <TabsContent value="tools" className="space-y-4 mt-0">
+                  {/* Render content based on activeToolCategory */}
+                  <div className={activeToolCategory === 'download' ? '' : 'hidden'}>
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {allTools
-                          .filter((tool) => tool.category === "image")
-                          .map((tool) => (
-                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                                <CardHeader className="flex-row items-start justify-between">
-                                  <div>
-                                    <CardTitle>{tool.title}</CardTitle>
-                                    <CardDescription>{tool.description}</CardDescription>
-                                  </div>
-                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
-                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
-                                  </Button>
+                      {allTools
+                        .filter((tool) => tool.category === "download")
+                        .map((tool) => (
+                          <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                            <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                              <CardHeader className="flex-row items-start justify-between">
+                                <div>
+                                  <CardTitle>{tool.title}</CardTitle>
+                                  <CardDescription>{tool.description}</CardDescription>
+                                </div>
+                                <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                  <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                </Button>
                               </CardHeader>
-                            <CardFooter>
-                                  <Link href={tool.href} className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
+                              <CardFooter>
+                                <Link href={tool.href} className="w-full">
+                                  <Button className="w-full rounded-2xl">Buka</Button>
+                                </Link>
                               </CardFooter>
                             </Card>
                           </motion.div>
-                          ))}
+                        ))}
                     </div>
-                </TabsContent>
-                    <TabsContent value="utilities" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {allTools
-                          .filter((tool) => tool.category === "utilities")
-                          .map((tool) => (
-                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                              <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                                <CardHeader className="flex-row items-start justify-between">
-                                  <div>
-                                    <CardTitle>{tool.title}</CardTitle>
-                                    <CardDescription>{tool.description}</CardDescription>
-                                  </div>
-                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
-                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
-                                  </Button>
-                            </CardHeader>
-                            <CardFooter>
-                                  <Link href={tool.href} className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                          ))}
-                          </div>
-                </TabsContent>
-                    <TabsContent value="ai" className="mt-6">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {allTools
-                          .filter((tool) => tool.category === "ai")
-                          .map((tool) => (
-                            <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
-                          <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
-                                <CardHeader className="flex-row items-start justify-between">
-                                  <div>
-                                    <CardTitle>{tool.title}</CardTitle>
-                                    <CardDescription>{tool.description}</CardDescription>
-                                  </div>
-                                  <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
-                                    <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
-                                  </Button>
-                        </CardHeader>
-                            <CardFooter>
-                                  <Link href={tool.href} className="w-full">
-                                <Button className="w-full rounded-2xl">Buka</Button>
-                              </Link>
-                            </CardFooter>
-                          </Card>
-                        </motion.div>
-                          ))}
-                          </div>
-                    </TabsContent>
-                  </Tabs>
+                  </div>
+                  <div className={activeToolCategory === 'image' ? '' : 'hidden'}>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {allTools
+                        .filter((tool) => tool.category === "image")
+                        .map((tool) => (
+                          <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                            <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                              <CardHeader className="flex-row items-start justify-between">
+                                <div>
+                                  <CardTitle>{tool.title}</CardTitle>
+                                  <CardDescription>{tool.description}</CardDescription>
+                                </div>
+                                <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                  <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                </Button>
+                              </CardHeader>
+                              <CardFooter>
+                                <Link href={tool.href} className="w-full">
+                                  <Button className="w-full rounded-2xl">Buka</Button>
+                                </Link>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
+                        ))}
+                    </div>
+                  </div>
+                  <div className={activeToolCategory === 'utilities' ? '' : 'hidden'}>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {allTools
+                        .filter((tool) => tool.category === "utilities")
+                        .map((tool) => (
+                          <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                            <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                              <CardHeader className="flex-row items-start justify-between">
+                                <div>
+                                  <CardTitle>{tool.title}</CardTitle>
+                                  <CardDescription>{tool.description}</CardDescription>
+                                </div>
+                                <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                  <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                </Button>
+                              </CardHeader>
+                              <CardFooter>
+                                <Link href={tool.href} className="w-full">
+                                  <Button className="w-full rounded-2xl">Buka</Button>
+                                </Link>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
+                        ))}
+                    </div>
+                  </div>
+                  <div className={activeToolCategory === 'ai' ? '' : 'hidden'}>
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {allTools
+                        .filter((tool) => tool.category === "ai")
+                        .map((tool) => (
+                          <motion.div key={tool.id} whileHover={{ scale: 1.02, y: -5 }} whileTap={{ scale: 0.98 }}>
+                            <Card className="h-full flex flex-col justify-between overflow-hidden rounded-2xl sm:rounded-3xl border hover:border-primary/50 transition-all duration-300">
+                              <CardHeader className="flex-row items-start justify-between">
+                                <div>
+                                  <CardTitle>{tool.title}</CardTitle>
+                                  <CardDescription>{tool.description}</CardDescription>
+                                </div>
+                                <Button variant="ghost" size="icon" onClick={() => toggleFavorite(tool.id)}>
+                                  <Star className={cn("h-5 w-5", favoriteTools.includes(tool.id) ? "text-yellow-400 fill-yellow-400" : "text-muted-foreground")} />
+                                </Button>
+                              </CardHeader>
+                              <CardFooter>
+                                <Link href={tool.href} className="w-full">
+                                  <Button className="w-full rounded-2xl">Buka</Button>
+                                </Link>
+                              </CardFooter>
+                            </Card>
+                          </motion.div>
+                        ))}
+                    </div>
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="settings" className="space-y-8 mt-0">
