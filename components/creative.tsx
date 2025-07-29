@@ -527,7 +527,7 @@ export function YeyoCreative() {
                     {isTools ? (
                       content
                     ) : (
-                      <Link href={item.id === 'home' ? '/' : `/${item.id}`}>
+                      <Link href={item.id === 'ai' ? '/ai/chat' : (item.id === 'home' ? '/' : `/${item.id}`)}>
                         {content}
                       </Link>
                     )}
