@@ -4,9 +4,14 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'yeyo',
+  description: '',
+  generator: '',
+  icons: {
+    icon: '/image.png?v=2',
+    shortcut: '/image.png?v=2',
+    apple: '/image.png?v=2',
+  },
 }
 
 export default function RootLayout({
@@ -17,6 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/image.png?v=2" type="image/png" />
+        <link rel="shortcut icon" href="/image.png?v=2" type="image/png" />
+        <link rel="apple-touch-icon" href="/image.png?v=2" />
         <style>{`
 html {
   font-family: ${GeistSans.style.fontFamily};

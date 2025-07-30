@@ -5,11 +5,13 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Award,
+  Bell,
   BookOpen,
   Bookmark,
   Brush,
   Camera,
   ChevronDown,
+  Cloud,
   Code,
   Crown,
   Download,
@@ -22,6 +24,7 @@ import {
   LayoutGrid,
   Lightbulb,
   Menu,
+  MessageSquare,
   Palette,
   PanelLeft,
   Play,
@@ -401,6 +404,7 @@ const allTools = [
 export function YeyoCreative() {
   const { toast } = useToast()
   const [progress, setProgress] = useState(0)
+  const [notifications, setNotifications] = useState(5)
   const [activeTab, setActiveTab] = useState("home")
   const [activeToolCategory, setActiveToolCategory] = useState("download")
   const [isToolsExpanded, setIsToolsExpanded] = useState(true)
@@ -690,8 +694,48 @@ export function YeyoCreative() {
             <PanelLeft className="h-5 w-5" />
           </Button>
           <div className="flex flex-1 items-center justify-between">
-            <h1 className="text-lg sm:text-xl font-semibold truncate">yeyo</h1>
+            <div></div>
             <div className="flex items-center gap-1 sm:gap-3">
+              <div className="hidden sm:flex items-center gap-3">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="icon" className="rounded-2xl">
+                        <Cloud className="h-5 w-5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Cloud Storage</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="icon" className="rounded-2xl">
+                        <MessageSquare className="h-5 w-5" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Messages</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" className="rounded-2xl relative">
+                      <Bell className="h-5 w-5" />
+                      {notifications > 0 && (
+                        <span className="absolute -right-1 -top-1 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+                          {notifications > 9 ? "9+" : notifications}
+                        </span>
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Notifications</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
               <Avatar className="h-8 w-8 sm:h-9 sm:w-9 border-2 border-primary">
                 <AvatarImage src="/nazril.png" alt="User" />
                 <AvatarFallback>N</AvatarFallback>
