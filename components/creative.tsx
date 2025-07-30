@@ -5,13 +5,11 @@ import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Award,
-  Bell,
   BookOpen,
   Bookmark,
   Brush,
   Camera,
   ChevronDown,
-  Cloud,
   Code,
   Crown,
   Download,
@@ -24,7 +22,6 @@ import {
   LayoutGrid,
   Lightbulb,
   Menu,
-  MessageSquare,
   Palette,
   PanelLeft,
   Play,
@@ -49,6 +46,7 @@ import {
   X,
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -403,7 +401,6 @@ const allTools = [
 export function YeyoCreative() {
   const { toast } = useToast()
   const [progress, setProgress] = useState(0)
-  const [notifications, setNotifications] = useState(5)
   const [activeTab, setActiveTab] = useState("home")
   const [activeToolCategory, setActiveToolCategory] = useState("download")
   const [isToolsExpanded, setIsToolsExpanded] = useState(true)
@@ -471,8 +468,14 @@ export function YeyoCreative() {
         <div className="flex h-full flex-col border-r">
           <div className="flex items-center justify-between p-4">
             <div className="flex items-center gap-3">
-              <div className="flex aspect-square size-10 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 text-white">
-                <Wand2 className="size-5" />
+              <div className="flex aspect-square size-10 items-center justify-center rounded-2xl overflow-hidden">
+                <Image
+                  src="/image.png"
+                  alt="Logo"
+                  width={40}
+                  height={40}
+                  className="rounded-2xl object-cover"
+                />
               </div>
               <div>
                 <h2 className="font-semibold">yeyo</h2>
@@ -579,8 +582,14 @@ export function YeyoCreative() {
         <div className="flex h-full flex-col">
           <div className="p-4">
             <div className="flex items-center gap-3">
-              <div className="flex aspect-square size-10 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-blue-600 text-white">
-                <Wand2 className="size-5" />
+              <div className="flex aspect-square size-10 items-center justify-center rounded-2xl overflow-hidden">
+                <Image
+                  src="/image.png"
+                  alt="Logo"
+                  width={40}
+                  height={40}
+                  className="rounded-2xl object-cover"
+                />
               </div>
               <div>
                 <h2 className="font-semibold">yeyo</h2>
@@ -683,46 +692,6 @@ export function YeyoCreative() {
           <div className="flex flex-1 items-center justify-between">
             <h1 className="text-lg sm:text-xl font-semibold truncate">yeyo</h1>
             <div className="flex items-center gap-1 sm:gap-3">
-              <div className="hidden sm:flex items-center gap-3">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" className="rounded-2xl">
-                        <Cloud className="h-5 w-5" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Cloud Storage</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" className="rounded-2xl">
-                        <MessageSquare className="h-5 w-5" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Messages</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" className="rounded-2xl relative">
-                      <Bell className="h-5 w-5" />
-                      {notifications > 0 && (
-                        <span className="absolute -right-1 -top-1 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                          {notifications > 9 ? "9+" : notifications}
-                        </span>
-                      )}
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>Notifications</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
               <Avatar className="h-8 w-8 sm:h-9 sm:w-9 border-2 border-primary">
                 <AvatarImage src="/nazril.png" alt="User" />
                 <AvatarFallback>N</AvatarFallback>
@@ -742,54 +711,6 @@ export function YeyoCreative() {
                 transition={{ duration: 0.2 }}
               >
                 <TabsContent value="home" className="space-y-8 mt-0">
-                  <section>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 p-4 sm:p-6 lg:p-8 text-white"
-                    >
-                      <div className="flex flex-col gap-4 sm:gap-6 lg:flex-row lg:items-center lg:justify-between">
-                        <div className="space-y-3 sm:space-y-4">
-                          <Badge className="bg-white/20 text-white hover:bg-white/30 rounded-xl text-xs sm:text-sm">
-                            Premium
-                          </Badge>
-                          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold">
-                            Welcome to yeyo Creative Suite
-                          </h2>
-                          <p className="max-w-[600px] text-sm sm:text-base text-white/80">
-                            Unleash your creativity with our comprehensive suite of professional design tools and
-                            resources.
-                          </p>
-                          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                            <Button className="rounded-2xl bg-white text-indigo-700 hover:bg-white/90 text-sm sm:text-base">
-                              Explore Plans
-                            </Button>
-                            <Button
-                              variant="outline"
-                              className="rounded-2xl bg-transparent border-white text-white hover:bg-white/10 text-sm sm:text-base"
-                            >
-                              Take a Tour
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="hidden xl:block">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 50, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                            className="relative h-32 w-32 lg:h-40 lg:w-40"
-                          >
-                            <div className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-md" />
-                            <div className="absolute inset-4 rounded-full bg-white/20" />
-                            <div className="absolute inset-8 rounded-full bg-white/30" />
-                            <div className="absolute inset-12 rounded-full bg-white/40" />
-                            <div className="absolute inset-16 rounded-full bg-white/50" />
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </section>
-
                   <section>
                     <h3 className="text-xl font-semibold mb-4">Favorite Tools</h3>
                     {favoriteTools.length > 0 ? (
